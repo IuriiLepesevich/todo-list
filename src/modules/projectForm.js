@@ -1,35 +1,12 @@
 import Project from "./project";
 import ProjectList from "./projectList";
+import renderProjectList from "./projectContainer";
 
 function removeForm() {
   const form = document.querySelector(".project-form");
   if (form) {
     form.remove();
   }
-}
-
-function createProjectContainer(projectName) {
-  const projectContainer = document.createElement("div");
-  projectContainer.classList.add("project-container");
-  projectContainer.textContent = projectName;
-
-  // projectContainer.addEventListener('mouseover', );
-
-  // projectContainer.addEventListener('mouseleave', );
-
-  return projectContainer;
-}
-
-function renderProjectList() {
-  const projectHolder = document.querySelector(".project-holder");
-
-  while (projectHolder.firstChild) {
-    projectHolder.removeChild(projectHolder.firstChild);
-  }
-
-  ProjectList.getList().forEach((project) => {
-    projectHolder.appendChild(createProjectContainer(project.getTitle()));
-  });
 }
 
 function addProject(e) {
@@ -39,6 +16,7 @@ function addProject(e) {
   removeForm();
   renderProjectList();
 }
+
 
 export default function appendProjectForm() {
   if (document.querySelector(".project-form")) return;
