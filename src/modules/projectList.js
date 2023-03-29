@@ -8,10 +8,11 @@ const ProjectList = (() => {
       projects.push(project);
   };
 
+  const getProjectByName = (projectname) =>
+    projects.filter((project) => project.getTitle() === projectname)[0];
+
   const removeByName = (projectName) => {
-    const neededProject = projects.filter(
-      (project) => project.getTitle() === projectName
-    )[0];
+    const neededProject = getProjectByName(projectName);
     const index = projects.indexOf(neededProject);
     projects.splice(index, 1);
   };
@@ -20,6 +21,7 @@ const ProjectList = (() => {
     getList,
     addProject,
     removeByName,
+    getProjectByName,
   };
 })();
 

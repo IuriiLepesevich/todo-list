@@ -7,7 +7,7 @@ export default function createPage() {
   container.appendChild(createMenu());
 
   const main = document.createElement("div");
-  main.classList.add("main");
+  main.setAttribute("id", "main");
   container.appendChild(main);
 
   return container;

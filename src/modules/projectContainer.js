@@ -1,9 +1,17 @@
 import del from "../images/delete.svg";
 import ProjectList from "./projectList";
+import { clearMainPage, renderProjectPage } from "./projectPage";
 
-function deleteProject() {
-  ProjectList.removeByName(this.parentElement.textContent);
-  renderProjectList();
+function deleteProject(e) {
+  e.stopPropagation();
+  const projectName = this.parentElement.textContent;
+  ProjectList.removeByName(projectName);
+  renderProjectList(); // eslint-disable-line no-use-before-define
+
+  const mainHeading = document.querySelector(".project-heading");
+  if (mainHeading) {
+    if (projectName === mainHeading.textContent) clearMainPage();
+  }
 }
 
 function checkForDeleteButton(container) {
@@ -34,23 +42,25 @@ function createProjectContainer(projectName) {
   projectContainer.classList.add("project-container");
   projectContainer.textContent = projectName;
 
-  projectContainer.addEventListener("mouseover", renderDeleteButton);
+  projectContainer.addEventListener(
+    "click",
+    renderProjectPage.bind(this, ProjectList.getProjectByName(projectName))
+  );
 
+  projectContainer.addEventListener("mouseover", renderDeleteButton);
   projectContainer.addEventListener("mouseleave", removeDeleteButton);
 
   return projectContainer;
 }
 
-function renderProjectList() {
-    const projectHolder = document.querySelector(".project-holder");
-  
-    while (projectHolder.firstChild) {
-      projectHolder.removeChild(projectHolder.firstChild);
-    }
-  
-    ProjectList.getList().forEach((project) => {
-      projectHolder.appendChild(createProjectContainer(project.getTitle()));
-    });
+export default function renderProjectList() {
+  const projectHolder = document.querySelector(".project-holder");
+
+  while (projectHolder.firstChild) {
+    projectHolder.removeChild(projectHolder.firstChild);
   }
 
-export default renderProjectList;
+  ProjectList.getList().forEach((project) => {
+    projectHolder.appendChild(createProjectContainer(project.getTitle()));
+  });
+}

@@ -80,7 +80,6 @@ body {
 .project-form {
   border-radius: 1rem;
   padding: 10px;
-  background-color: rgb(170, 170, 170);
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -96,7 +95,7 @@ body {
 
 .project-button-holder {
   display: flex;
-  gap: 5px;
+  gap: 10px;
 }
 
 .project-button-holder > input {
@@ -104,6 +103,7 @@ body {
   font-size: 1.3rem;
   border: none;
   outline: none;
+  padding: 5px;
 }
 
 .project-button-apply {
@@ -114,4 +114,5 @@ body {
     background-color: rgba(255, 0, 0, 0.7);
 }
 
-
+#main {
+}
