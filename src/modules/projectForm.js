@@ -17,6 +17,7 @@ function addProject(e) {
   renderProjectList();
 }
 
+ProjectList.addProject(Project("Example")); // Extra line for debugging
 
 export default function appendProjectForm() {
   if (document.querySelector(".project-form")) return;
@@ -53,4 +54,6 @@ export default function appendProjectForm() {
   form.appendChild(buttonHolder);
 
   projectHolder.appendChild(form);
+
+  form.querySelector(".project-name-input").focus();
 }

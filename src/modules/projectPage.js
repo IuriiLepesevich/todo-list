@@ -13,6 +13,11 @@ function renderProjectPage(project) {
   projectHeading.classList.add("project-heading");
   projectHeading.textContent = project.getTitle();
 
+  const addNewTask = document.createElement('button');
+  addNewTask.classList.add('add-new-task');
+  addNewTask.textContent = 'Add new task';
+  projectHeading.appendChild(addNewTask);
+
   main.appendChild(projectHeading);
 }
 
