@@ -23,7 +23,7 @@ function renderProjectPage(project) {
   const addNewTask = document.createElement("button");
   addNewTask.classList.add("add-new-task");
   addNewTask.textContent = "Add new task";
-  addNewTask.addEventListener("click", renderTaskForm);
+  addNewTask.addEventListener("click", renderTaskForm.bind(addNewTask, 0));
   projectHeading.appendChild(addNewTask);
 
   main.appendChild(projectHeading);

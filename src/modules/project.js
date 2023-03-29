@@ -2,7 +2,7 @@ import TaskList from "./taskList";
 
 export default function Project(title) {
   const projectTitle = title;
-  const  taskList = TaskList();
+  const taskList = TaskList();
 
   const getTitle = () => projectTitle;
 

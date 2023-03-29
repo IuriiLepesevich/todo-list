@@ -1,7 +1,7 @@
 export default function Task(title, description, dueDate, priority) {
   const priorities = ["Low", "Medium", "High"];
 
-  const taskTitle = title;
+  let taskTitle = title;
   let taskDescription = description;
   let taskDueDate = dueDate;
   let taskPriority = priority;
@@ -12,6 +12,9 @@ export default function Task(title, description, dueDate, priority) {
   const getNumberedPriority = () => taskPriority;
   const getPriority = () => priorities[taskPriority];
 
+  const setTitle = (value) => {
+    taskTitle = value;
+  };
   const setDescription = (value) => {
     taskDescription = value;
   };
@@ -28,6 +31,7 @@ export default function Task(title, description, dueDate, priority) {
     getDueDate,
     getPriority,
     getNumberedPriority,
+    setTitle,
     setDescription,
     setDueDate,
     setPriority,

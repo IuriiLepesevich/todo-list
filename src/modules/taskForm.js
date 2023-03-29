@@ -1,6 +1,6 @@
 import Task from "./task";
-import ProjectList from "./projectList";
-import { renderTableData } from "./taskTable";
+import { renderTableData } from "./taskTable"; // eslint-disable-line import/no-cycle
+import getCurrentProject from "./getCurrentProject";
 
 function removeForm() {
   const overlay = document.querySelector("#overlay");
@@ -18,26 +18,32 @@ function createOverlay() {
   return overlay;
 }
 
-function submitForm(e) {
-  e.preventDefault();
+function submitForm(targetTask) {
+  const currentProject = getCurrentProject();
 
-  const currentProjectName =
-    document.querySelector(".project-name").textContent;
-  const currentProject = ProjectList.getProjectByName(currentProjectName);
+  const taskTitle = this.querySelector(".task-title-input").value;
+  const taskDescription = this.querySelector(".task-title-input").value;
+  const taskDate = this.querySelector(".task-date-input").value;
+  const taskPriority = this.querySelector(".task-priority-input").value;
 
-  const taskTitle = this.querySelector('.task-title-input').value;
-  const taskDescription = this.querySelector('.task-title-input').value;
-  const taskDate = this.querySelector('.task-date-input').value;
-  const taskPriority = this.querySelector('.task-priority-input').value;
-
-  currentProject.getTaskList().addTask(Task(taskTitle, taskDescription, taskDate, taskPriority));
+  console.log(targetTask);
+  if (targetTask) {
+    targetTask.setTitle(taskTitle);
+    targetTask.setDescription(taskDescription);
+    targetTask.setDate(taskDate);
+    targetTask.setPriority(taskPriority);
+  } else {
+    currentProject
+      .getTaskList()
+      .addTask(Task(taskTitle, taskDescription, taskDate, taskPriority));
+  }
 
   removeForm();
 
   renderTableData();
 }
 
-export default function renderTaskForm() {
+export default function renderTaskForm(targetTask) {
   const main = document.querySelector("#main");
 
   const form = document.createElement("form");
@@ -95,11 +101,10 @@ export default function renderTaskForm() {
 
   const submitButton = document.createElement("input");
   submitButton.classList.add("task-priority-input");
-  submitButton.setAttribute("type", "submit");
+  submitButton.setAttribute("type", "btn");
   submitButton.setAttribute("value", "Add");
+  submitButton.addEventListener("click", submitForm.bind(form, targetTask));
   form.appendChild(submitButton);
-
-  form.addEventListener("submit", submitForm);
 
   main.appendChild(createOverlay());
   main.appendChild(form);

@@ -135,7 +135,24 @@ body {
 }
 
 .task-table {
-  border: 1px solid black;
+  border-spacing: 0px 20px;
+}
+
+.task-table :is(td, th) {
+  text-align: start;
+  padding: 5px 10px;
+}
+
+th {
+  border-bottom: 2px solid black;
+}
+
+:is(td, th):not(:first-child) {
+  border-left: 1px solid black;
+}
+
+.table-heading {
+  font-size: 1.5rem;
 }
 
 #overlay {
@@ -157,4 +174,69 @@ body {
   background-color: white;
   width: 850px;
   height: 400px;
+}
+
+.table-row.low > td {
+  border-top: 3px solid green;
+  border-bottom: 3px solid green;
+}
+
+.table-row.medium > td  {
+  border-top: 3px solid orange;
+  border-bottom: 3px solid orange;
+}
+
+.table-row.high > td  {
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
+}
+
+.table-row.low > td:first-child {
+  border-left: 3px solid green;
+}
+
+.table-row.medium > td:first-child {
+  border-left: 3px solid orange;
+}
+
+.table-row.high > td:first-child {
+  border-left: 3px solid red;
+}
+
+.table-row.low > td:last-child {
+  border-right: 3px solid green;
+}
+
+.table-row.medium > td:last-child {
+  border-right: 3px solid orange;
+}
+
+.table-row.high > td:last-child {
+  border-right: 3px solid red;
+}
+
+td {
+  font-size: 1.3rem;
+}
+
+.task-table td.change {
+  padding: 3px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.change > * {
+  display: inline-block;
+  height: 30px;
+}
+
+.task-delete-svg:hover {
+  background-color: rgba(255, 0, 0, 0.6);
+  border-radius: 0.3rem;
+}
+
+.task-edit-svg:hover {
+  background-color: rgba(255, 166, 0, 0.6);
+  border-radius: 0.3rem;
 }
