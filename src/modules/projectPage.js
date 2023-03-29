@@ -1,4 +1,4 @@
-import { createTaskTable } from "./taskTable";
+import { createTaskTable, renderTableData } from "./taskTable";
 import renderTaskForm from "./taskForm";
 
 function clearMainPage() {
@@ -29,6 +29,8 @@ function renderProjectPage(project) {
   main.appendChild(projectHeading);
 
   main.appendChild(createTaskTable());
+
+  renderTableData();
 }
 
 export { clearMainPage, renderProjectPage };

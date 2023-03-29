@@ -1,6 +1,4 @@
 import Task from "./task";
-import TaskList from "./taskList";
-import Project from "./project";
 import ProjectList from "./projectList";
 import { renderTableData } from "./taskTable";
 
