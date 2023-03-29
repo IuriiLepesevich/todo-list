@@ -3,13 +3,12 @@ const ProjectList = (() => {
 
   const getList = () => projects;
 
-  const addProject = (project) => {
-    if (!projects.some((elem) => elem.getTitle() === project.getTitle()))
-      projects.push(project);
-  };
-
   const getProjectByName = (projectname) =>
     projects.filter((project) => project.getTitle() === projectname)[0];
+
+  const addProject = (project) => {
+    if (!getProjectByName(project.getTitle())) projects.push(project);
+  };
 
   const removeByName = (projectName) => {
     const neededProject = getProjectByName(projectName);

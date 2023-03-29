@@ -8,9 +8,11 @@ function deleteProject(e) {
   ProjectList.removeByName(projectName);
   renderProjectList(); // eslint-disable-line no-use-before-define
 
-  const mainHeading = document.querySelector(".project-heading");
-  if (mainHeading) {
-    if (projectName === mainHeading.textContent) clearMainPage();
+  const projectHeading = document.querySelector(".project-name");
+  if (projectHeading) {
+    if (projectName === projectHeading.textContent) {
+      clearMainPage();
+    }
   }
 }
 

@@ -1,3 +1,6 @@
+import { createTaskTable } from "./taskTable";
+import renderTaskForm from "./taskForm";
+
 function clearMainPage() {
   const main = document.querySelector("#main");
   while (main.firstChild) {
@@ -9,16 +12,23 @@ function renderProjectPage(project) {
   const main = document.querySelector("#main");
   clearMainPage();
 
-  const projectHeading = document.createElement("h1");
+  const projectHeading = document.createElement("div");
   projectHeading.classList.add("project-heading");
-  projectHeading.textContent = project.getTitle();
 
-  const addNewTask = document.createElement('button');
-  addNewTask.classList.add('add-new-task');
-  addNewTask.textContent = 'Add new task';
+  const projectName = document.createElement("span");
+  projectName.classList.add("project-name");
+  projectName.textContent = project.getTitle();
+  projectHeading.appendChild(projectName);
+
+  const addNewTask = document.createElement("button");
+  addNewTask.classList.add("add-new-task");
+  addNewTask.textContent = "Add new task";
+  addNewTask.addEventListener("click", renderTaskForm);
   projectHeading.appendChild(addNewTask);
 
   main.appendChild(projectHeading);
+
+  main.appendChild(createTaskTable());
 }
 
 export { clearMainPage, renderProjectPage };
