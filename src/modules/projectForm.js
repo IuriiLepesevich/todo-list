@@ -26,7 +26,7 @@ function editProject(targetedProject) {
   removeForm();
   renderProjectList();
   if(isCurrentProject) {
-    renderProjectPage();
+    renderProjectPage(targetedProject);
   }
 }
 
