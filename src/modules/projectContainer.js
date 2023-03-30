@@ -1,6 +1,8 @@
 import del from "../images/delete.svg";
+import edit from "../images/edit.svg";
 import ProjectList from "./projectList";
 import { clearMainPage, renderProjectPage } from "./projectPage";
+import appendProjectForm from "./projectForm"; // eslint-disable-line import/no-cycle
 
 function deleteProject(e) {
   e.stopPropagation();
@@ -20,6 +22,10 @@ function checkForDeleteButton(container) {
   return container.querySelector(".project-delete");
 }
 
+function checkForEditButton(container) {
+  return container.querySelector(".project-edit");
+}
+
 function renderDeleteButton(e) {
   const targetedContainer = e.target;
   if (checkForDeleteButton(targetedContainer)) return;
@@ -32,6 +38,19 @@ function renderDeleteButton(e) {
   targetedContainer.appendChild(deleteButton);
 }
 
+function renderEditButton(e) {
+  const targetedContainer = e.target;
+  if (checkForEditButton(targetedContainer)) return;
+
+  const editButton = document.createElement("img");
+  editButton.setAttribute("src", edit);
+  editButton.classList.add("project-edit");
+  const currentProject = ProjectList.getProjectByName(e.target.id);
+  editButton.addEventListener("click", (evt) => appendProjectForm(evt, currentProject));
+
+  targetedContainer.appendChild(editButton);
+}
+
 function removeDeleteButton(e) {
   const targetedContainer = e.target;
   if (!checkForDeleteButton(targetedContainer)) return;
@@ -39,15 +58,26 @@ function removeDeleteButton(e) {
   targetedContainer.querySelector(".project-delete").remove();
 }
 
+function removeEditButton(e) {
+  const targetedContainer = e.target;
+  if (!checkForEditButton(targetedContainer)) return;
+
+  targetedContainer.querySelector(".project-edit").remove();
+}
+
 function createProjectContainer(projectName) {
   const projectContainer = document.createElement("div");
   projectContainer.classList.add("project-container");
+  projectContainer.setAttribute("id", projectName);
   projectContainer.textContent = projectName;
 
   projectContainer.addEventListener(
     "click",
     renderProjectPage.bind(this, ProjectList.getProjectByName(projectName))
   );
+
+  projectContainer.addEventListener("mouseover", renderEditButton);
+  projectContainer.addEventListener("mouseleave", removeEditButton);
 
   projectContainer.addEventListener("mouseover", renderDeleteButton);
   projectContainer.addEventListener("mouseleave", removeDeleteButton);

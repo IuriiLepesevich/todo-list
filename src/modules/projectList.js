@@ -16,11 +16,16 @@ const ProjectList = (() => {
     projects.splice(index, 1);
   };
 
+  const setProjectTitle = (project, title) => {
+    if (!getProjectByName(title)) project.setTitle(title);
+  };
+
   return {
     getList,
     addProject,
     removeByName,
     getProjectByName,
+    setProjectTitle,
   };
 })();
 

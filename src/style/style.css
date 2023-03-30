@@ -63,17 +63,23 @@ body {
   border-radius: 2rem;
   font-size: 2.3rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  gap: 5px;
 }
 
-.project-delete {
-  position: absolute;
-  right: 10px;
+.project-delete,
+.project-edit {
+  height: 90%;
 }
 
 .project-delete:hover {
   background-color: rgba(255, 0, 0, 0.6);
+  border-radius: 1rem;
+}
+
+.project-edit:hover {
+  background-color: rgba(255, 166, 0, 0.6);
   border-radius: 1rem;
 }
 
@@ -181,12 +187,12 @@ th {
   border-bottom: 3px solid green;
 }
 
-.table-row.medium > td  {
+.table-row.medium > td {
   border-top: 3px solid orange;
   border-bottom: 3px solid orange;
 }
 
-.table-row.high > td  {
+.table-row.high > td {
   border-top: 3px solid red;
   border-bottom: 3px solid red;
 }
@@ -245,12 +251,12 @@ td:not(.DueDate) {
   border-radius: 0.3rem;
 }
 
-.task-table input[type='checkbox'] {
+.task-table input[type="checkbox"] {
   margin: auto;
   display: flex;
   transform: scale(2.5);
 }
 
 .checked {
-  background-color: rgba(128, 128, 128, 0.541);
+  background-color: rgba(128, 128, 128, 0.5);
 }
