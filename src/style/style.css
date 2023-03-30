@@ -216,7 +216,11 @@ th {
 }
 
 td {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+}
+
+td:not(.DueDate) {
+  font-size: 1.5rem;
 }
 
 .task-table td.change {
@@ -228,7 +232,7 @@ td {
 
 .change > * {
   display: inline-block;
-  height: 30px;
+  height: 50px;
 }
 
 .task-delete-svg:hover {
@@ -239,4 +243,14 @@ td {
 .task-edit-svg:hover {
   background-color: rgba(255, 166, 0, 0.6);
   border-radius: 0.3rem;
+}
+
+.task-table input[type='checkbox'] {
+  margin: auto;
+  display: flex;
+  transform: scale(2.5);
+}
+
+.checked {
+  background-color: rgba(128, 128, 128, 0.541);
 }

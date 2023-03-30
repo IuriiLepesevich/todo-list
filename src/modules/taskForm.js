@@ -18,19 +18,21 @@ function createOverlay() {
   return overlay;
 }
 
-function submitForm(targetTask) {
+function submitForm(targetTaskList, targetTask) {
+  if(targetTaskList.target) {
+    targetTaskList.preventDefault();
+  }
   const currentProject = getCurrentProject();
 
   const taskTitle = this.querySelector(".task-title-input").value;
-  const taskDescription = this.querySelector(".task-title-input").value;
+  const taskDescription = this.querySelector(".task-description-input").value;
   const taskDate = this.querySelector(".task-date-input").value;
   const taskPriority = this.querySelector(".task-priority-input").value;
 
-  console.log(targetTask);
-  if (targetTask) {
-    targetTask.setTitle(taskTitle);
+  if (targetTaskList && targetTask && !targetTaskList.target) {
+    targetTaskList.setTaskTitle(targetTask, taskTitle);
     targetTask.setDescription(taskDescription);
-    targetTask.setDate(taskDate);
+    targetTask.setDueDate(taskDate);
     targetTask.setPriority(taskPriority);
   } else {
     currentProject
@@ -39,11 +41,10 @@ function submitForm(targetTask) {
   }
 
   removeForm();
-
   renderTableData();
 }
 
-export default function renderTaskForm(targetTask) {
+export default function renderTaskForm(targetTaskList, targetTask) {
   const main = document.querySelector("#main");
 
   const form = document.createElement("form");
@@ -99,12 +100,20 @@ export default function renderTaskForm(targetTask) {
   priorityHolder.appendChild(priorityInput);
   form.appendChild(priorityHolder);
 
+  if(targetTaskList && targetTask && !targetTaskList.target) {
+    titleInput.value = targetTask.getTitle();
+    descriptionInput.value = targetTask.getDescription();
+    dateInput.value = targetTask.getDueDate();
+    priorityInput.value = targetTask.getNumberedPriority();
+  }
+
   const submitButton = document.createElement("input");
   submitButton.classList.add("task-priority-input");
-  submitButton.setAttribute("type", "btn");
+  submitButton.setAttribute("type", "submit");
   submitButton.setAttribute("value", "Add");
-  submitButton.addEventListener("click", submitForm.bind(form, targetTask));
   form.appendChild(submitButton);
+
+  form.addEventListener("submit", submitForm.bind(form, targetTaskList, targetTask));
 
   main.appendChild(createOverlay());
   main.appendChild(form);

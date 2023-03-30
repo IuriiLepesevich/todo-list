@@ -10,6 +10,10 @@ export default function TaskList() {
     if (!getTaskByName(task.getTitle())) taskList.push(task);
   };
 
+  const setTaskTitle = (task, title) => {
+    if (!getTaskByName(title)) task.setTitle(title);
+  };
+
   const removeByName = (taskName) => {
     const neededTask = getTaskByName(taskName);
     const index = taskList.indexOf(neededTask);
@@ -21,5 +25,6 @@ export default function TaskList() {
     addTask,
     removeByName,
     getTaskByName,
+    setTaskTitle,
   };
 }

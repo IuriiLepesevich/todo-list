@@ -12,20 +12,32 @@ function clearTable() {
 
 function removeTask() {
   const currentProject = getCurrentProject();
-  currentProject.getTaskList().removeByName(this.parentElement.id);
+  currentProject
+    .getTaskList()
+    .removeByName(this.parentElement.parentElement.id);
   renderTableData(); // eslint-disable-line no-use-before-define
 }
 
 function editTask() {
   const currentProject = getCurrentProject();
-  const currentTask = currentProject
+  const currentTaskList = currentProject.getTaskList();
+  const currentTask = currentTaskList.getTaskByName(
+    this.parentElement.parentElement.id
+  );
+  renderTaskForm(currentTaskList, currentTask);
+}
+
+function toggleCheck() {
+  const currentProject = getCurrentProject();
+  currentProject
     .getTaskList()
-    .getTaskByName(this.parentElement.id);
-  renderTaskForm(currentTask);
+    .getTaskByName(this.parentElement.parentElement.id)
+    .setIsChecked(this.checked);
+  renderTableData(); // eslint-disable-line no-use-before-define
 }
 
 function createTableRow(type, task) {
-  const cells = ["Title", "Description", "DueDate", "Priority"];
+  const cells = ["IsChecked", "Title", "Description", "DueDate", "Priority"];
 
   const tableRow = document.createElement("tr");
   if (task) {
@@ -34,20 +46,30 @@ function createTableRow(type, task) {
   } else tableRow.classList.add("table-heading");
 
   cells.forEach((cellType) => {
-    const cell = document.createElement(`${type}`);
+    const cell = document.createElement(type);
     cell.classList.add(`${cellType}`);
-    if (type === "th") {
-      cell.textContent = cellType;
-    } else {
+    if (type !== "th") {
       const textFunction = `get${cellType}`;
-      cell.textContent = task[textFunction]();
-      if (cellType === "Priority")
-        tableRow.classList.add(task.getPriority().toLowerCase());
+      if (cellType === "IsChecked") {
+        const checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        const isTaskChecked = task[textFunction]();
+        checkbox.checked = isTaskChecked;
+        if(isTaskChecked) tableRow.classList.add('checked');
+        checkbox.addEventListener("click", toggleCheck);
+        cell.appendChild(checkbox);
+      } else {
+        cell.textContent = task[textFunction]();
+        if (cellType === "Priority")
+          tableRow.classList.add(task.getPriority().toLowerCase());
+      }
+    } else {
+      cell.textContent = cellType;
     }
     tableRow.appendChild(cell);
   });
 
-  const delCell = document.createElement(`${type}`);
+  const delCell = document.createElement(type);
   delCell.classList.add("change");
   if (type === "th") {
     delCell.textContent = "Change";
@@ -89,6 +111,11 @@ function createTaskTable() {
 
   const colgroup = document.createElement("colgroup");
 
+  const col0 = document.createElement("col");
+  col0.setAttribute("span", "1");
+  col0.setAttribute("style", "width: 5%");
+  colgroup.appendChild(col0);
+
   const col1 = document.createElement("col");
   col1.setAttribute("span", "1");
   col1.setAttribute("style", "width: 20%");
@@ -96,7 +123,7 @@ function createTaskTable() {
 
   const col2 = document.createElement("col");
   col2.setAttribute("span", "1");
-  col2.setAttribute("style", "width: 40%");
+  col2.setAttribute("style", "width: 35%");
   colgroup.appendChild(col2);
 
   const col3 = document.createElement("col");
