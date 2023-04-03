@@ -3,13 +3,14 @@ import edit from "../images/edit.svg";
 import ProjectList from "./projectList";
 import { clearMainPage, renderProjectPage } from "./projectPage";
 import appendProjectForm from "./projectForm"; // eslint-disable-line import/no-cycle
+import { addProjectListLocalStorage } from "./localStorage";
 
 function deleteProject(e) {
   e.stopPropagation();
   const projectName = this.parentElement.textContent;
   ProjectList.removeByName(projectName);
   renderProjectList(); // eslint-disable-line no-use-before-define
-
+  addProjectListLocalStorage();
   const projectHeading = document.querySelector(".project-name");
   if (projectHeading) {
     if (projectName === projectHeading.textContent) {
@@ -46,7 +47,9 @@ function renderEditButton(e) {
   editButton.setAttribute("src", edit);
   editButton.classList.add("project-edit");
   const currentProject = ProjectList.getProjectByName(e.target.id);
-  editButton.addEventListener("click", (evt) => appendProjectForm(evt, currentProject));
+  editButton.addEventListener("click", (evt) =>
+    appendProjectForm(evt, currentProject)
+  );
 
   targetedContainer.appendChild(editButton);
 }

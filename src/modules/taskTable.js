@@ -2,6 +2,7 @@ import del from "../images/delete.svg";
 import edit from "../images/edit.svg";
 import getCurrentProject from "./getCurrentProject";
 import renderTaskForm from "./taskForm"; // eslint-disable-line import/no-cycle
+import { addProjectListLocalStorage } from "./localStorage";
 
 function clearTable() {
   const table = document.querySelector(".task-table");
@@ -15,6 +16,7 @@ function removeTask() {
   currentProject
     .getTaskList()
     .removeByName(this.parentElement.parentElement.id);
+  addProjectListLocalStorage();
   renderTableData(); // eslint-disable-line no-use-before-define
 }
 
@@ -33,6 +35,8 @@ function toggleCheck() {
     .getTaskList()
     .getTaskByName(this.parentElement.parentElement.id)
     .setIsChecked(this.checked);
+
+  addProjectListLocalStorage();
   renderTableData(); // eslint-disable-line no-use-before-define
 }
 
@@ -55,13 +59,14 @@ function createTableRow(type, task) {
         checkbox.setAttribute("type", "checkbox");
         const isTaskChecked = task[textFunction]();
         checkbox.checked = isTaskChecked;
-        if(isTaskChecked) tableRow.classList.add('checked');
+        if (isTaskChecked) tableRow.classList.add("checked");
         checkbox.addEventListener("click", toggleCheck);
         cell.appendChild(checkbox);
       } else {
         cell.textContent = task[textFunction]();
-        if (cellType === "Priority")
+        if (cellType === "Priority") {
           tableRow.classList.add(task.getPriority().toLowerCase());
+        }
       }
     } else {
       cell.textContent = cellType;
@@ -74,17 +79,17 @@ function createTableRow(type, task) {
   if (type === "th") {
     delCell.textContent = "Change";
   } else {
-    const deleteTaskButton = document.createElement("img");
-    deleteTaskButton.setAttribute("src", del);
-    deleteTaskButton.classList.add("task-delete-svg");
-    deleteTaskButton.addEventListener("click", removeTask);
-    delCell.appendChild(deleteTaskButton);
-
     const editTaskButton = document.createElement("img");
     editTaskButton.setAttribute("src", edit);
     editTaskButton.classList.add("task-edit-svg");
     editTaskButton.addEventListener("click", editTask);
     delCell.appendChild(editTaskButton);
+
+    const deleteTaskButton = document.createElement("img");
+    deleteTaskButton.setAttribute("src", del);
+    deleteTaskButton.classList.add("task-delete-svg");
+    deleteTaskButton.addEventListener("click", removeTask);
+    delCell.appendChild(deleteTaskButton);
   }
   tableRow.appendChild(delCell);
 

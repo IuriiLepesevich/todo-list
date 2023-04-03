@@ -27,7 +27,7 @@ export default function Task(title, description, dueDate, priority) {
     taskPriority = value;
   };
   const setIsChecked = (value) => {
-    isChecked = !!value;
+    isChecked = value;
   };
 
   return {

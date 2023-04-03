@@ -180,6 +180,36 @@ th {
   background-color: white;
   width: 850px;
   height: 400px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+.task-form > input {
+  margin: auto;
+  width: 60%;
+  height: 40%;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.priority-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.priority-holder > select {
+  width: 40%;
+  height: 40%;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.task-submit {
+  grid-column: 1 / -1;
 }
 
 .table-row.low > td {

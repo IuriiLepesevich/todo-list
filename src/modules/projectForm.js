@@ -3,6 +3,7 @@ import ProjectList from "./projectList";
 import renderProjectList from "./projectContainer"; // eslint-disable-line import/no-cycle
 import getCurrentProject from "./getCurrentProject";
 import { renderProjectPage } from "./projectPage";
+import { addProjectListLocalStorage } from "./localStorage";
 
 function removeForm() {
   const form = document.querySelector(".project-form");
@@ -14,23 +15,24 @@ function removeForm() {
 function addProject(e) {
   e.preventDefault();
   const projectName = this.querySelector(".project-name-input").value;
-  ProjectList.addProject(Project(projectName));
+  const newProject = Project(projectName);
+  ProjectList.addProject(newProject);
+  addProjectListLocalStorage();
   removeForm();
   renderProjectList();
 }
 
 function editProject(targetedProject) {
-  const isCurrentProject = (getCurrentProject() === targetedProject);
+  const isCurrentProject = getCurrentProject() === targetedProject;
   const projectName = this.querySelector(".project-name-input").value;
   ProjectList.setProjectTitle(targetedProject, projectName);
+  addProjectListLocalStorage();
   removeForm();
   renderProjectList();
-  if(isCurrentProject) {
+  if (isCurrentProject) {
     renderProjectPage(targetedProject);
   }
 }
-
-ProjectList.addProject(Project("Example")); // Extra line for debugging
 
 export default function appendProjectForm(evt, targetedProject) {
   if (document.querySelector(".project-form")) return;
